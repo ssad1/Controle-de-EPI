@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+{% block title %}Lista de EPIs{% endblock %}
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-3">
+    <h2>Lista de EPIs</h2>
+    <a href="{% url 'criar_epi' %}" class="btn btn-primary">+ Novo EPI</a>
+</div>
+
+{% if messages %}
+  {% for message in messages %}
+    <div class="alert alert-{{ message.tags }}">{{ message }}</div>
+  {% endfor %}
+{% endif %}
+
+{% if epis %}
+<table class="table table-striped table-bordered shadow-sm">
+    <thead class="table-dark">
+        <tr>
+            <th>Nome</th>
+            <th>Categoria</th>
+            <th>Quantidade</th>
+            <th>Validade</th>
+            <th>Ações</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for e in epis %}
+        <tr>
+            <td>{{ e.nome }}</td>
+            <td>{{ e.categoria }}</td>
+            <td>{{ e.quantidade }}</td>
+            <td>{{ e.validade|default:"-" }}</td>
+            <td>
+                <a href="{% url 'editar_epi' e.id %}" class="btn btn-sm btn-warning">Editar</a>
+                <a href="{% url 'deletar_epi' e.id %}" class="btn btn-sm btn-danger">Excluir</a>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% else %}
+<div class="alert alert-info text-center">
+    Nenhum EPI cadastrado ainda.
+</div>
+{% endif %}
+{% endblock %}
