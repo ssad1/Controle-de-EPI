@@ -4,7 +4,7 @@
 {% block content %}
 <div class="container mt-4">
 
-  <!-- Faixa preta no topo -->
+  <!-- Faixa preta -->
   <div class="d-flex justify-content-between align-items-center mb-3 p-3 bg-dark text-white rounded">
     <h2 class="mb-0">{{ titulo }}</h2>
     <a href="{% url 'lista_emprestimos' %}" class="btn btn-light">Voltar</a>
@@ -16,27 +16,45 @@
     <div class="card shadow-sm">
       <div class="card-body">
 
+        <!-- COLABORADOR -->
         <div class="mb-3">
-          <label for="id_colaborador" class="form-label">Colaborador</label>
+          <label class="form-label">Colaborador</label>
           {{ form.colaborador }}
         </div>
 
+        <!-- EPI -->
         <div class="mb-3">
-          <label for="id_epi" class="form-label">EPI</label>
+          <label class="form-label">EPI</label>
           {{ form.epi }}
         </div>
 
+        <!-- QUANTIDADE -->
         <div class="mb-3">
-          <label for="id_quantidade" class="form-label">Quantidade</label>
+          <label class="form-label">Quantidade</label>
           {{ form.quantidade }}
         </div>
 
-        <!-- Campo de data de empréstimo -->
+        <!-- DATA EMPRÉSTIMO -->
         <div class="mb-3">
-          <label for="id_data_emprestimo" class="form-label">Data do Empréstimo</label>
+          <label class="form-label">Data do Empréstimo</label>
           {{ form.data_emprestimo }}
+          {{ form.data_emprestimo.errors }}
         </div>
 
+        <!-- DATA DEVOLUÇÃO (CORRETA E ÚNICA) -->
+        <div class="mb-3">
+          <label class="form-label">Data de Devolução</label>
+          {{ form.data_devolucao }}
+          {{ form.data_devolucao.errors }}
+        </div>
+
+        <!-- STATUS -->
+        <div class="mb-3">
+          <label class="form-label">Status</label>
+          {{ form.status }}
+        </div>
+
+        <!-- BOTÕES -->
         <div class="d-flex justify-content-end">
           <button type="submit" class="btn btn-success me-2">Salvar</button>
           <a href="{% url 'lista_emprestimos' %}" class="btn btn-secondary">Cancelar</a>
@@ -45,5 +63,12 @@
       </div>
     </div>
   </form>
+
+  {% if form.errors %}
+  <div class="alert alert-danger mt-3">
+      {{ form.errors }}
+  </div>
+  {% endif %}
+
 </div>
 {% endblock %}

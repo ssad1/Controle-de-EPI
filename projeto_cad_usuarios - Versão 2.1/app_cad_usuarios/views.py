@@ -6,8 +6,13 @@ from django.contrib import messages
 # CRUD DE EPIs
 
 def lista_epis(request):
-    epis = EPI.objects.all()
+    q = request.GET.get('q')
+    if q:
+        epis = EPI.objects.filter(nome__icontains=q)
+    else:
+        epis = EPI.objects.all()
     return render(request, 'epis/lista.html', {'epis': epis})
+
 
 def criar_epi(request):
     form = EPIForm(request.POST or None)
@@ -24,6 +29,8 @@ def editar_epi(request, id):
         form.save()
         messages.success(request, 'EPI atualizado com sucesso!')
         return redirect('lista_epis')
+    else:
+        form = EPIForm(instance=epi)   # <- CARREGA OS DADOS
     return render(request, 'epis/form.html', {'form': form, 'titulo': 'Editar EPI'})
 
 def deletar_epi(request, id):
@@ -34,12 +41,15 @@ def deletar_epi(request, id):
         return redirect('lista_epis')
     return render(request, 'epis/confirmar_delete.html', {'epi': epi})
 
-# -------------------------------------------------
 # CRUD DE COLABORADORES
-# -------------------------------------------------
 def lista_colaboradores(request):
-    colaboradores = Colaborador.objects.all()
+    q = request.GET.get('q')
+    if q:
+        colaboradores = Colaborador.objects.filter(nome__icontains=q)
+    else:
+        colaboradores = Colaborador.objects.all()
     return render(request, 'colaboradores/lista.html', {'colaboradores': colaboradores})
+
 
 def criar_colaborador(request):
     form = ColaboradorForm(request.POST or None)
@@ -66,12 +76,18 @@ def deletar_colaborador(request, id):
         return redirect('lista_colaboradores')
     return render(request, 'epis/confirmar_delete.html', {'epi': colaborador})
 
-# -------------------------------------------------
 # CRUD DE EMPRÉSTIMOS
-# -------------------------------------------------
 def lista_emprestimos(request):
-    emprestimos = Emprestimo.objects.select_related('colaborador', 'epi').all()
+    q = request.GET.get('q')
+    if q:
+        emprestimos = Emprestimo.objects.filter(
+            Q(colaborador__nome__icontains=q) |
+            Q(epi__nome__icontains=q)
+        )
+    else:
+        emprestimos = Emprestimo.objects.all()
     return render(request, 'emprestimos/lista.html', {'emprestimos': emprestimos})
+
 
 def criar_emprestimo(request):
     form = EmprestimoForm(request.POST or None)

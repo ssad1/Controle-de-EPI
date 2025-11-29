@@ -18,7 +18,6 @@
     <thead class="table-dark">
       <tr>
         <th>Nome</th>
-        <th>Matrícula</th>
         <th>Setor</th>
         <th>Ações</th>
       </tr>
@@ -27,7 +26,6 @@
       {% for colaborador in colaboradores %}
       <tr>
         <td>{{ colaborador.nome }}</td>
-        <td>{{ colaborador.matricula }}</td>
         <td>{{ colaborador.setor }}</td>
         <td>
           <a href="{% url 'editar_colaborador' colaborador.id %}" class="btn btn-sm btn-warning">Editar</a>
