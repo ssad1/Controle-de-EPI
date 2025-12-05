@@ -19,4 +19,8 @@ urlpatterns = [
     path('emprestimos/novo/', views.criar_emprestimo, name='criar_emprestimo'),
     path('emprestimos/editar/<int:id>/', views.editar_emprestimo, name='editar_emprestimo'),
     path('emprestimos/deletar/<int:id>/', views.deletar_emprestimo, name='deletar_emprestimo'),
+
+    # Pesquisa
+
+    path('', views.buscar_EPI, name='EPI-Pesquisa'),
 ]

@@ -113,3 +113,16 @@ def deletar_emprestimo(request, id):
         messages.success(request, 'Empréstimo removido com sucesso!')
         return redirect('lista_emprestimos')
     return render(request, 'epis/confirmar_delete.html', {'epi': emprestimo})
+
+def buscar_EPI(request):
+
+    url_atual = request.path
+    context = {
+        'resposta': request.GET.get('w')
+    }
+    return render(request, 'epis/lista.html', context)
+
+    if request.method == "GET":
+        return 0
+
+    return 1

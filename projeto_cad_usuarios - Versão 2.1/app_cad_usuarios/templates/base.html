@@ -13,7 +13,12 @@
     <div class="container">
       
       <a class="navbar-brand" href="{% url 'lista_epis' %}">Controle de EPIs</a>
-  
+
+      <form class="d-flex barra-pesquisa-pequena" role="search" method = "get">
+        <input class="form-control me-2" type="search" name = "w" placeholder="Pesquisar" aria-label="Pesquisar">
+        <button class="btn btn-outline-success" type="submit">Pesquisar</button>
+      </form>
+
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
         <span class="navbar-toggler-icon"></span>
       </button>
@@ -35,12 +40,7 @@
       </div>
     </div>
   </nav>
-  <form class="d-flex barra-pesquisa-pequena" role="search">
-    <input class="form-control me-2" type="search" placeholder="Pesquisar" aria-label="Pesquisar">
-    <button class="btn btn-outline-success" type="submit">Pesquisar</button>
-  </form>
   
-
   <!-- Conteúdo principal -->
   <div class="container mt-4">
     {% block content %}
