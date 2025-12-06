@@ -5,12 +5,15 @@ from django.contrib import messages
 
 # CRUD DE EPIs
 
-def lista_epis(request):
+def lista_epis(request, check = None):
+
     q = request.GET.get('q')
+
     if q:
         epis = EPI.objects.filter(nome__icontains=q)
     else:
         epis = EPI.objects.all()
+
     return render(request, 'epis/lista.html', {'epis': epis})
 
 
@@ -114,15 +117,54 @@ def deletar_emprestimo(request, id):
         return redirect('lista_emprestimos')
     return render(request, 'epis/confirmar_delete.html', {'epi': emprestimo})
 
+#BARRA DE BUSCAS UNIVERSAL
+
 def buscar_EPI(request):
 
-    url_atual = request.path
-    context = {
-        'resposta': request.GET.get('w')
-    }
-    return render(request, 'epis/lista.html', context)
+    caminho = request.GET.get('origin')
+    resposta = request.GET.get('w')
+    q = request.GET.get('q')
 
-    if request.method == "GET":
-        return 0
+    #processar de onde veio a informação
 
-    return 1
+    match caminho:
+        case "/pesquisar/":
+
+        case "/":
+            
+            epis = EPI.objects.filter(nome = resposta)
+
+            return render(
+                request, 
+                'epis/lista.html', 
+                {
+                    'epis': epis
+                }
+            )
+        case "/colaboradores/":
+        
+            colabs = Colaborador.objects.filter(nome = resposta)
+
+            return render(
+                request, 
+                'colaboradores/lista.html', 
+                {
+                    'colaboradores': colabs
+                }
+            )
+        case "/emprestimos/":
+        
+            emprestimos = Emprestimo.objects.filter(colaborador__nome=resposta)
+
+            return render(
+                request, 
+                'emprestimos/lista.html', 
+                {
+                    'emprestimos': emprestimos
+                }
+            )
+        case _:
+            return render(
+                request, 
+                'falha_pesquisa.html'
+            )

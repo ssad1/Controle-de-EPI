@@ -22,5 +22,5 @@ urlpatterns = [
 
     # Pesquisa
 
-    path('', views.buscar_EPI, name='EPI-Pesquisa'),
+    path('pesquisar/', views.buscar_EPI, name='EPI-Pesquisa'),
 ]
