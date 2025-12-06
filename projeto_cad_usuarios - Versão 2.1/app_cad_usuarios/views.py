@@ -53,7 +53,6 @@ def lista_colaboradores(request):
         colaboradores = Colaborador.objects.all()
     return render(request, 'colaboradores/lista.html', {'colaboradores': colaboradores})
 
-
 def criar_colaborador(request):
     form = ColaboradorForm(request.POST or None)
     if form.is_valid():
@@ -89,7 +88,10 @@ def lista_emprestimos(request):
         )
     else:
         emprestimos = Emprestimo.objects.all()
-    return render(request, 'emprestimos/lista.html', {'emprestimos': emprestimos})
+
+    form = EmprestimoForm(request.POST or None)
+
+    return render(request, 'emprestimos/lista.html', {'emprestimos': emprestimos, 'form': form})
 
 
 def criar_emprestimo(request):

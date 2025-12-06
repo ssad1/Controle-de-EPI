@@ -41,8 +41,7 @@ class EmprestimoForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
 
-        # SE É UM NOVO EMPRÉSTIMO, restringimos os status permitidos
-        if not self.instance.pk:  # Criando → só podem estes:
+        if not self.instance.pk:
             status_permitidos = ['emprestado', 'em_uso', 'fornecido']
             self.fields['status'].choices = [
                 (k, v) for k, v in Emprestimo.STATUS_CHOICES if k in status_permitidos
