@@ -128,8 +128,6 @@ def buscar_EPI(request):
     #processar de onde veio a informação
 
     match caminho:
-        case "/pesquisar/":
-
         case "/":
             
             epis = EPI.objects.filter(nome = resposta)
